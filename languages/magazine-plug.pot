@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts-tabs.php:1
+msgid "All"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts-tabs.php:1
+msgid "Congratulations, you've reached all posts."
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-social.php:1
+msgid "Follow Us"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-social.php:1
+msgid "Follow us on"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts-tabs.php:1
+msgid "Galleries"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts-tabs.php:1
+msgid "Load More Posts"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts-tabs.php:1
+msgid "Posts"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts.php:1
+msgid "Read More"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-social.php:1
+msgid "Subscribe us on"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts-tabs.php:1
+msgid "Videos"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts.php:1
+#: magazine-plug/shortcodes/s-grid.php:1
+#: magazine-plug/magazin-extras.php:169
+#: magazine-plug/shortcodes/s-trending.php:1
+msgid "shares"
+msgstr ""
+
+#. Text in function
+#: magazine-plug/shortcodes/s-posts.php:1
+#: magazine-plug/shortcodes/s-grid.php:1
+#: magazine-plug/magazin-extras.php:169
+#: magazine-plug/shortcodes/s-trending.php:1
+msgid "views"
+msgstr ""

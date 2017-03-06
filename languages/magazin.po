@@ -1,0 +1,190 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Text in function
+#: magazin-extras/widgets/w-social.php:1
+msgid ""
+msgstr ""
+
+#. Text in function
+#: magazin-extras/widgets/w-social.php:1
+msgid "A Social Widget"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Ads"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Article bottom ad"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Carousel Autoplay"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Custom CSS"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 1"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 2"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 3"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 4"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 5"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 6"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 7"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 8"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Custom ad 9"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Facebook token"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Facebook username"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/widgets/w-social.php:1
+msgid "Follow Us And get latest news"
+msgstr ""
+
+#. Text in echo
+#: magazin-extras/shortcodes/s-social.php:1
+msgid "Follow us on"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Footer top ad"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "General"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Header Ad"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "OFF"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "ON"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Performance"
+msgstr ""
+
+#. Text in echo
+#: magazin-extras/shortcodes/s-posts.php:1
+msgid "Read More"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Sidebar bottom ad"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Sidebar middle ad"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "Sidebar top ad"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Social Widget Settings"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Sticky Sidebar"
+msgstr ""
+
+#. Text in echo
+#: magazin-extras/shortcodes/s-social.php:1
+msgid "Subscribe us on"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "Twitter username"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-ads.php:1
+msgid "YOUR AD CODE"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/customizer/customizer-general.php:1
+msgid "YouTube username"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/shortcodes/s-grid.php:1
+#: magazin-extras/shortcodes/s-posts.php:1
+msgid "shares"
+msgstr ""
+
+#. Text in function
+#: magazin-extras/widgets/w-social.php:1
+msgid "tophot Social"
+msgstr ""
