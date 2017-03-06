@@ -564,11 +564,22 @@ function page_post_metabox() {
 	) );
 
 	$cmb_demo->add_field( array(
-    'name'    => __( 'Select an Image', 'magazin' ),
-    'id'      => $prefix . 'images',
-    'type'    => 'remote_image_select',
- 	) );
-
+    'name'    => 'Test File',
+    'desc'    => 'Upload an image or enter an URL.',
+    'id'      => 'wiki_test_image',
+    'type'    => 'file',
+    // Optional:
+    'options' => array(
+        'url' => false, // Hide the text input for the url
+    ),
+    'text'    => array(
+        'add_upload_file_text' => 'Add File' // Change upload button text. Default: "Add or Upload File"
+    ),
+    // query_args are passed to wp.media's library query.
+    'query_args' => array(
+        'type' => 'application/pdf', // Make library only display PDFs.
+    ),
+) );
 
 	$cmb_demo->add_field( array(
 			'name'             => esc_html__( 'Page Layouts', 'magazin' ),
