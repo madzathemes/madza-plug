@@ -7,6 +7,7 @@ Author: Madars Bitenieks
 Version: 1.0
 Author URI: https://madzathemes.net
 */
+include_once ('madza-metabox.php');
 include_once ('plugins/easy-google-fonts/easy-google-fonts.php');
 include_once ('plugins/megadropdownmenu-master/megadropdown.php');
 if (class_exists('WPBakeryShortCode')) {
