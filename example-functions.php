@@ -563,6 +563,12 @@ function page_post_metabox() {
 		// 'classes_cb' => 'yourprefix_add_some_classes', // Add classes through a callback.
 	) );
 
+	$cmb_demo->add_field( array(
+    'name'    => __( 'Select an Image', 'magazin' ),
+    'id'      => $prefix . 'images',
+    'type'    => 'remote_image_select',
+ 	) );
+
 
 	$cmb_demo->add_field( array(
 			'name'             => esc_html__( 'Page Layouts', 'magazin' ),
