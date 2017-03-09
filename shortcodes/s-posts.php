@@ -644,18 +644,18 @@ function posts( $atts, $content = null ) {
 
 						if (has_post_thumbnail()) {
 							$shortcode .='<div class="poster large '; if (has_post_format( 'video' )) { $shortcode .= ' video'; } $shortcode .='">';
-								$shortcode .='<div class="poster-image mt-radius">';
+								$shortcode .='<div class="poster-image">';
 									$shortcode .='<div class="poster-large-content">';
 
 										$shortcode .='<div class="poster-large-content-in">';
-											$shortcode .='<div class="poster-large-cat"><span class="mt-theme-background">';
+											$shortcode .='<div class="poster-large-cat"><span>';
 												$category_name = get_the_category(get_the_ID());
 												$cat_nr = get_theme_mod( 'mt_post_meta_cat', 1 );
 												if(!empty($category_name[0]) and $cat_nr == 1 or $cat_nr == 2 or $cat_nr == 3) { $shortcode .=''.$category_name[0]->name.''; }
 												if(!empty($category_name[1]) and $cat_nr == 2 or $cat_nr == 3) { $shortcode .=', '.$category_name[1]->name.''; }
 												if(!empty($category_name[2]) and $cat_nr == 3) { $shortcode .=', '.$category_name[2]->name.''; }
 												$shortcode .='</span></div>';
-											$shortcode .='<a href="'. get_permalink().'"><h2>'. get_the_title() .'</h2></a>';
+											$shortcode .='<a href="'. get_permalink().'"><h3>'. get_the_title() .'</h3></a>';
 											$shortcode .='<p>'.$excerpt_.'</p>';
 											$shortcode .='<a class="poster-large-link" href="'. get_permalink().'"><div><span>'. esc_html__( 'Read More', 'magazine-plug'  ) .'</span></div></a>';
 										$shortcode .='</div>';

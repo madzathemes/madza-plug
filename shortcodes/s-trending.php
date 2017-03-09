@@ -189,7 +189,7 @@ function posts_trending( $atts, $content = null ) {
 
 
 				if($type=="trending-carousel"){
-					$shortcode .='<div class="poster-carousel-trending mt-radius">';
+					$shortcode .='<div class="poster-carousel-trending">';
 					if($title_type=="center" and $title != ""){ $shortcode .= '<h2 class="heading"><span>'.$title.'</span></h2>'; }
 					if($title_type=="left" and $title != ""){ $shortcode .= '<h2 class="heading heading-left"><span>'.$title.'</span></h2>'; }
 					if($title_type=="right" and $title != ""){ $shortcode .= '<h2 class="heading heading-right"><span>'.$title.'</span></h2>'; }
@@ -211,8 +211,8 @@ function posts_trending( $atts, $content = null ) {
 							$viewes = $views + "0";
 							if (!empty($view)){ $viewes = $view + $views; $viewes = number_format($viewes); }
 							$shortcode .='<div class="poster trending-carousel'; if (!has_post_thumbnail()) { $shortcode .= ' img-empty'; } if (has_post_format( 'video' )) { $shortcode .= ' video'; } if (has_post_format( 'gallery' )) { $shortcode .= ' gallery'; } $shortcode .='">';
-							$shortcode .='<div class="number mt-theme-background">'.$i.'</div>';
-								$shortcode .='<a class="poster-image mt-radius" href="'. get_permalink().'">';
+
+								$shortcode .='<a class="poster-image" href="'. get_permalink().'">';
 									if ( has_post_format( 'video' )) {
 										$shortcode .='<span class="video-icon"></span>';
 									}
@@ -220,10 +220,9 @@ function posts_trending( $atts, $content = null ) {
 										$shortcode .='<div class="mt-post-image" ><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy="'. get_the_post_thumbnail_url(get_the_ID(),'medium').'" alt="'.get_the_title().'"/></div>';
 									}
 									if ( !has_post_format( 'video' ) ) {
-										$shortcode .='<i class="ic-open open"></i>';
-										$shortcode .='<div class="poster-info mt-theme-background">';
+										$shortcode .='<div class="poster-info">';
 											if ( has_post_thumbnail() ) {
-												$shortcode .='<div class="poster-cat"><span>';
+												$shortcode .='<div class="poster-cat"><span class="mt-radius">';
 													$category_name = get_the_category(get_the_ID());
 													$cat_nr = get_theme_mod( 'mt_post_meta_cat', 1 );
 													if(!empty($category_name[0]) and $cat_nr == 1 or $cat_nr == 2 or $cat_nr == 3) { $shortcode .=''.$category_name[0]->name.''; }

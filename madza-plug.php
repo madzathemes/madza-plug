@@ -262,13 +262,13 @@ function magazin_class($classes) {
 		}
 	}
 
-	$radius = "mt-radius-5";
+	$radius = "mt-radius-25";
 	if(!empty($radius_option)) {
 		if($radius_option=="0px"){
 			$radius = "mt-radius-0";
 		} else
-		if($radius_option=="25px"){
-			$radius = "mt-radius-25";
+		if($radius_option=="5px"){
+			$radius = "mt-radius-5";
 		}
 	}
 
