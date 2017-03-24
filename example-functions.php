@@ -691,3 +691,117 @@ function header_settings_metabox() {
 
 }
 add_action( 'cmb2_admin_init', 'header_settings_metabox' );
+
+function header_slider_metabox() {
+	$prefix = 'madzaplug_';
+
+	/**
+	 * Sample metabox to demonstrate each field type included
+	 */
+	$settings = new_cmb2_box( array(
+		'id'            => $prefix . 'metabox_slider',
+		'title'         => esc_html__( 'Slider', 'magazin' ),
+		'object_types'  => array( 'page', 'post'), // Post type
+		// 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
+		// 'context'    => 'normal',
+		'priority'   => 'high',
+		// 'show_names' => true, // Show field names on the left
+		// 'cmb_styles' => false, // false to disable the CMB stylesheet
+		// 'closed'     => true, // true to keep the metabox closed by default
+		// 'classes'    => 'extra-class', // Extra cmb2-wrap classes
+		// 'classes_cb' => 'yourprefix_add_some_classes', // Add classes through a callback.
+	) );
+
+	$settings->add_field( array(
+		'name'             => esc_html__( 'Slider Type', 'magazin' ),
+		'id'               => $prefix . 'slider_type',
+		'type'             => 'radio_inline',
+		'show_option_none' => 'Off ',
+		'options'          => array(
+			'slider-mt' => esc_html__( 'Madza Slider', 'magazin' ),
+			'shortcode' => esc_html__( 'Slider Plugin Shortcode', 'magazin' ),
+		),
+	) );
+	$settings->add_field( array(
+			'name' => 'Slider Plugin Shortcode',
+			'id'   => $prefix . 'slider_shortcode',
+			'type' => 'text',
+			// 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
+	) );
+
+	$group_field_id = $settings->add_field( array(
+    'id'          => 'madza_slider_group',
+    'type'        => 'group',
+    'description' => __( 'Use this lightweight slider for better site performance.', 'cmb2' ),
+    // 'repeatable'  => false, // use false if you want non-repeatable group
+    'options'     => array(
+        'group_title'   => __( 'Slide {#}', 'cmb2' ), // since version 1.1.4, {#} gets replaced by row number
+        'add_button'    => __( 'Add Another Slide', 'cmb2' ),
+        'remove_button' => __( 'Remove Slide', 'cmb2' ),
+        'sortable'      => true, // beta
+        'closed'     => true, // true to have the groups closed by default
+    ),
+) );
+
+		// Id's for group's fields only need to be unique for the group. Prefix is not needed.
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Slide Title',
+		    'id'   => 'title',
+		    'type' => 'text',
+		    // 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
+		) );
+
+		// Id's for group's fields only need to be unique for the group. Prefix is not needed.
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Sub Title',
+		    'id'   => 'subtitle',
+		    'type' => 'text',
+		    // 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
+		) );
+
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Description',
+		    'description' => 'Write a short description for this slide',
+		    'id'   => 'description',
+		    'type' => 'textarea_small',
+		) );
+
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Slide Image',
+		    'id'   => 'image',
+		    'type' => 'file',
+		) );
+
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Button First (Name)',
+		    'id'   => 'button_1_name',
+		    'type' => 'text_small',
+		) );
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Button First (URL)',
+		    'id'   => 'button_1_url',
+		    'type' => 'text_url',
+		) );
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Button Second (Name)',
+		    'id'   => 'button_2_name',
+		    'type' => 'text_small',
+		) );
+		$settings->add_group_field( $group_field_id, array(
+		    'name' => 'Button Second (URL)',
+		    'id'   => 'button_2_url',
+		    'type' => 'text_url',
+		) );
+
+		$settings->add_group_field( $group_field_id, array(
+	    'name'    => __( 'Color Above Image', 'cmb2' ),
+	    'id'   => 'color',
+	    'type' => 'rgba_colorpicker',
+	    'default'  => ' ',
+	
+	) );
+
+
+
+}
+add_action( 'cmb2_admin_init', 'header_slider_metabox' );

@@ -10,6 +10,7 @@ Author URI: https://madzathemes.net
 include_once ('madza-metabox.php');
 include_once ('plugins/easy-google-fonts/easy-google-fonts.php');
 include_once ('plugins/megadropdownmenu-master/megadropdown.php');
+include_once ('plugins/cmb2/jw-cmb2-rgba-colorpicker.php');
 if (class_exists('WPBakeryShortCode')) {
 	include_once ('vc-shortcodes/vc-posts-tabs.php');
 	include_once ('vc-shortcodes/vc-ads.php');
