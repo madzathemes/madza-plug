@@ -267,7 +267,7 @@ function posts( $atts, $content = null ) {
 								}
 								if ( !has_post_format( 'video' ) ) {
 									$shortcode .='<i class="ic-open open"></i>';
-									$shortcode .='<div class="poster-info mt-theme-background">';
+									$shortcode .='<div class="poster-info">';
 										if ( has_post_thumbnail() ) {
 											$shortcode .='<div class="poster-cat "><span class="mt-theme-text">';
 												$category_name = get_the_category(get_the_ID());
@@ -285,7 +285,7 @@ function posts( $atts, $content = null ) {
 									$shortcode .='</div>';
 								}
 								if ( has_post_format( 'video' ) and has_post_thumbnail() ) {
-									$shortcode .='<div class="poster-info mt-theme-background">';
+									$shortcode .='<div class="poster-info">';
 									$shortcode .='<div class="poster-cat"><span class="mt-theme-text">';
 										$category_name = get_the_category(get_the_ID());
 										$cat_nr = get_theme_mod( 'mt_post_meta_cat', 1 );
@@ -348,7 +348,7 @@ function posts( $atts, $content = null ) {
 								}
 								if ( !has_post_format( 'video' ) ) {
 									$shortcode .='<i class="ic-open open"></i>';
-									$shortcode .='<div class="poster-info mt-theme-background">';
+									$shortcode .='<div class="poster-info">';
 										if ( has_post_thumbnail() ) {
 											$shortcode .='<div class="poster-cat"><span>';
 												$category_name = get_the_category(get_the_ID());
@@ -366,7 +366,7 @@ function posts( $atts, $content = null ) {
 									$shortcode .='</div>';
 								}
 								if ( has_post_format( 'video' ) and has_post_thumbnail() ) {
-									$shortcode .='<div class="poster-info mt-theme-background">';
+									$shortcode .='<div class="poster-info">';
 									$shortcode .='<div class="poster-cat"><span>';
 										$category_name = get_the_category(get_the_ID());
 										$cat_nr = get_theme_mod( 'mt_post_meta_cat', 1 );
