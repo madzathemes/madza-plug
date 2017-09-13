@@ -77,11 +77,7 @@ function magazin_theme_setup() {
 	add_image_size( 'magazin_480', 520, 520, false );
 	add_image_size( 'magazin_625', 625, 625, false );
 	add_image_size( 'magazin_100', 100, 68, true );
-	add_image_size( 'magazin_5', 15, 99, false );
-	if(function_exists('fullstory_theme_setup')) {
-		add_image_size( 'magazin_1300', 1300, 370, true );
-		add_image_size( 'magazin_1300_5', 26, 8, true );
-	}
+	add_image_size( 'madza_920', 920, 999, true );
 
 }
 
