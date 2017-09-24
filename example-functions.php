@@ -565,7 +565,7 @@ function page_post_metabox() {
 	$cmb_demo = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox_page_post',
 		'title'         => esc_html__( 'Design Settings', 'magazin' ),
-		'object_types'  => array( 'page', 'post'), // Post type
+		'object_types'  => array( 'page', 'post', 'our-services', 'our-staff'), // Post type
 		// 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
 		// 'context'    => 'normal',
 		'priority'   => 'low',
@@ -633,20 +633,22 @@ function page_post_metabox() {
 	));
 
 	$cmb_demo->add_field( array(
-			'name'             => esc_html__( 'Menu Background', 'magazin' ),
-			'id'               => $prefix . 'menu_background_width',
+			'name'             => esc_html__( 'Layouts', 'magazin' ),
+			'id'               => $prefix . 'page_sidebar',
 			'type'             => 'radio_image',
 			'show_option_none' => '',
 			'options'          => array(
 					'0' => esc_html__('From Customizer', 'magazin'),
 					'1' => esc_html__('Style 1', 'magazin'),
 					'2' => esc_html__('Style 2', 'magazin'),
+					'3' => esc_html__('Style 3', 'magazin'),
 			),
 			'images_path'      => get_template_directory_uri(),
 			'images'           => array(
 					'0' => 'inc/img/post_style_0.png',
-					'1' => 'inc/img/boxed.png',
-					'2' => 'inc/img/full.png',
+					'1' => 'inc/img/sidebar-right.png',
+					'2' => 'inc/img/sidebar-left.png',
+					'3' => 'inc/img/full.png',
 			)
 	) );
 
@@ -663,7 +665,7 @@ function header_settings_metabox() {
 	$settings = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox_header',
 		'title'         => esc_html__( 'Header Settings', 'magazin' ),
-		'object_types'  => array( 'page', 'post'), // Post type
+		'object_types'  => array( 'page', 'post', 'our-services', 'our-staff'), // Post type
 		// 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
 		// 'context'    => 'normal',
 		'priority'   => 'low',
@@ -701,7 +703,7 @@ function header_slider_metabox() {
 	$settings = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox_slider',
 		'title'         => esc_html__( 'Slider', 'magazin' ),
-		'object_types'  => array( 'page', 'post'), // Post type
+		'object_types'  => array( 'page', 'post', 'our-services', 'our-staff'), // Post type
 		// 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
 		// 'context'    => 'normal',
 		'priority'   => 'high',
@@ -798,7 +800,7 @@ function header_slider_metabox() {
 	    'id'   => 'color',
 	    'type' => 'rgba_colorpicker',
 	    'default'  => ' ',
-	
+
 	) );
 
 
