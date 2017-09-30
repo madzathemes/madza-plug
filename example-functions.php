@@ -577,7 +577,7 @@ function page_post_metabox() {
 	) );
 
 	$cmb_demo->add_field( array(
-    'name'    => 'Test File',
+    'name'    => 'Sertificate PDF',
     'desc'    => 'Upload an image or enter an URL.',
     'id'      => 'wiki_test_image',
     'type'    => 'file',
