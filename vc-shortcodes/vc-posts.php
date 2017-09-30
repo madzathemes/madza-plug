@@ -5,6 +5,7 @@ add_shortcode( 'mt_posts', 'mt_posts_func' );
 
         extract(shortcode_atts(array(
             'title_type' => '',
+						'post_type' => '',
             'title' => '',
             'category' => '',
             'orderby' => '',
@@ -18,7 +19,7 @@ add_shortcode( 'mt_posts', 'mt_posts_func' );
 						'taxonomy_term' => '',
         ), $atts));
 
-        $content_ = "[posts type='$type' taxonomy_term='$taxonomy_term' taxonomy='$taxonomy' author='$author' tag='$tag' item_nr='$item_nr' offset='$offset' orderby='$orderby' category='$category' title='$title' pagination='$pagination' title_type='$title_type']";
+        $content_ = "[posts post_type='$post_type' type='$type' taxonomy_term='$taxonomy_term' taxonomy='$taxonomy' author='$author' tag='$tag' item_nr='$item_nr' offset='$offset' orderby='$orderby' category='$category' title='$title' pagination='$pagination' title_type='$title_type']";
 
         return  do_shortcode($content_);
 
@@ -34,7 +35,12 @@ function mt_posts_fields() {
       "category" => "mt Moduls",
       "params"    => array(
 
-
+				array(
+						 "type" => "textfield",
+						 "heading" => esc_html__("Post Type", "magazin"),
+						 "param_name" => "post_type",
+						 "value" => "",
+				 ),
 					array(
               "type" => "dropdown",
               "heading" => esc_html__("Type", "magazin"),

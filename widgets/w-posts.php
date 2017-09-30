@@ -13,6 +13,7 @@ class Posts_Widget extends WP_Widget {
 		echo $args['before_widget'];
 
 		$item_nr = "";
+		$post_type = "post";
 		$type = "normal";
 		$offset = "";
 		$category = "";
@@ -39,12 +40,13 @@ class Posts_Widget extends WP_Widget {
 		if ( ! empty( $instance['taxonomy'] ) ) { $taxonomy = $instance['taxonomy'];	}
 		if ( ! empty( $instance['taxonomy_term'] ) ) { $taxonomy_term = $instance['taxonomy_term'];	}
 
-		echo do_shortcode("[posts type='$type' item_nr='$item_nr' taxonomy='$taxonomy' taxonomy_term='$taxonomy_term' author='$author' offset='$offset' orderby='$orderby' category='$category' tag='$tag' title='$title' pagination='$pagination' title_type='$title_type']");
+		echo do_shortcode("[posts post_type='$post_type' type='$type' item_nr='$item_nr' taxonomy='$taxonomy' taxonomy_term='$taxonomy_term' author='$author' offset='$offset' orderby='$orderby' category='$category' tag='$tag' title='$title' pagination='$pagination' title_type='$title_type']");
 
 		echo $args['after_widget'];
 	}
 
 	public function form( $instance ) {
+		$post_type = ! empty( $instance['post_type'] ) ? $instance['post_type'] : esc_html__( 'middle', 'tophot' );
 		$type = ! empty( $instance['type'] ) ? $instance['type'] : esc_html__( 'middle', 'tophot' );
 		$item_nr = ! empty( $instance['item_nr'] ) ? $instance['item_nr'] : esc_html__( '', 'tophot' );
 		$offset = ! empty( $instance['offset'] ) ? $instance['offset'] : esc_html__( '', 'tophot' );
@@ -58,6 +60,10 @@ class Posts_Widget extends WP_Widget {
 		$taxonomy = ! empty( $instance['taxonomy'] ) ? $instance['taxonomy'] : esc_html__( '', 'tophot' );
 		$taxonomy_term = ! empty( $instance['taxonomy_term'] ) ? $instance['taxonomy_term'] : esc_html__( '', 'tophot' );
 		?>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'post_type' ) ); ?>"><?php _e( esc_attr( 'Post Type:' ) ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'post_type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'post_type' ) ); ?>" type="text" value="<?php echo esc_attr( $post_type ); ?>">
+		</p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'type' ) ); ?>"><?php _e( esc_attr( 'Type:' ) ); ?></label>
 			<select class='widefat' id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>" type="text">
@@ -135,6 +141,7 @@ class Posts_Widget extends WP_Widget {
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
+		$instance['post_type'] = ( ! empty( $new_instance['post_type'] ) ) ? strip_tags( $new_instance['post_type'] ) : '';
 		$instance['type'] = ( ! empty( $new_instance['type'] ) ) ? strip_tags( $new_instance['type'] ) : '';
 		$instance['item_nr'] = ( ! empty( $new_instance['item_nr'] ) ) ? strip_tags( $new_instance['item_nr'] ) : '';
 		$instance['offset'] = ( ! empty( $new_instance['offset'] ) ) ? strip_tags( $new_instance['offset'] ) : '';

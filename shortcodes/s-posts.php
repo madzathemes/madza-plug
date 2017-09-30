@@ -1,7 +1,7 @@
 <?php
 function posts( $atts, $content = null ) {
 		extract( shortcode_atts( array(
-			'posttype' => 'post',
+			'post_type' => 'post',
 			'item_nr' => '',
 			'order' => '',
 			'orderby' => '',
@@ -48,7 +48,7 @@ function posts( $atts, $content = null ) {
 
 
 			$args = array(
-				'post_type'=>$posttype,
+				'post_type'=>$post_type,
 				'order'=>$order,
 				'orderby'=>$orderby,
 				'include'=>$include,
@@ -63,7 +63,7 @@ function posts( $atts, $content = null ) {
 			);
 
 			$args_popular = array(
-				'post_type'=>$posttype,
+				'post_type'=>$post_type,
 				'order'=>$order,
 				'orderby'=>"meta_value_num",
 				'include'=>$include,
@@ -78,7 +78,7 @@ function posts( $atts, $content = null ) {
 				'tag'=>$tag
 			);
 			$args_shares = array(
-				'post_type'=>$posttype,
+				'post_type'=>$post_type,
 				'order'=>$order,
 				'orderby'=>"meta_value_num",
 				'include'=>$include,
