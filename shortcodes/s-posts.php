@@ -1,7 +1,7 @@
 <?php
 function posts( $atts, $content = null ) {
 		extract( shortcode_atts( array(
-			'post_type' => 'our-services',
+			'post_type' => 'page',
 			'item_nr' => '',
 			'order' => '',
 			'orderby' => '',
