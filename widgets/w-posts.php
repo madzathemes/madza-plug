@@ -13,7 +13,7 @@ class Posts_Widget extends WP_Widget {
 		echo $args['before_widget'];
 
 		$item_nr = "";
-		$post_type = "page";
+		$post_type = "post";
 		$type = "normal";
 		$offset = "";
 		$category = "";
@@ -27,6 +27,7 @@ class Posts_Widget extends WP_Widget {
 		$taxonomy_term = "";
 		$widget_id = "";
 
+		if ( ! empty( $instance['post_type'] ) ) { $post_type = $instance['post_type']; }
 		if ( ! empty( $instance['type'] ) ) { $type = $instance['type']; }
 		if ( ! empty( $instance['item_nr'] ) ) { $item_nr = $instance['item_nr'];	}
 		if ( ! empty( $instance['offset'] ) ) { $offset = $instance['offset'];	}
