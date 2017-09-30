@@ -46,7 +46,7 @@ class Posts_Widget extends WP_Widget {
 	}
 
 	public function form( $instance ) {
-		$post_type = ! empty( $instance['post_type'] ) ? $instance['post_type'] : esc_html__( 'middle', 'tophot' );
+		$post_type = ! empty( $instance['post_type'] ) ? $instance['post_type'] : esc_html__( 'post', 'tophot' );
 		$type = ! empty( $instance['type'] ) ? $instance['type'] : esc_html__( 'middle', 'tophot' );
 		$item_nr = ! empty( $instance['item_nr'] ) ? $instance['item_nr'] : esc_html__( '', 'tophot' );
 		$offset = ! empty( $instance['offset'] ) ? $instance['offset'] : esc_html__( '', 'tophot' );
