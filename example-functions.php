@@ -802,9 +802,8 @@ function header_slider_metabox() {
 			'name'             => esc_html__( 'Content Position', 'magazin' ),
 			'id'               => 'position',
 			'type'             => 'radio_inline',
-			'show_option_none' => 'Off ',
+			'show_option_none' => 'Left ',
 			'options'          => array(
-				'mt-slide-left' => esc_html__( 'Left', 'magazin' ),
 				'mt-slide-center' => esc_html__( 'Center', 'magazin' ),
 				'mt-slide-right' => esc_html__( 'Right', 'magazin' ),
 			),
