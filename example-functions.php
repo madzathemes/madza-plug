@@ -799,14 +799,6 @@ function header_slider_metabox() {
 		) );
 
 		$settings->add_group_field( $group_field_id, array(
-	    'name'    => __( 'Color Above Image', 'cmb2' ),
-	    'id'   => 'color',
-	    'type' => 'rgba_colorpicker',
-	    'default'  => ' ',
-
-		) );
-
-		$settings->add_group_field( $group_field_id, array(
 			'name'             => esc_html__( 'Content Position', 'magazin' ),
 			'id'               => 'position',
 			'type'             => 'radio_inline',
