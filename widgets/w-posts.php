@@ -13,7 +13,7 @@ class Posts_Widget extends WP_Widget {
 		echo $args['before_widget'];
 
 		$item_nr = "";
-		$post_type = "post";
+		$post_type = "page";
 		$type = "normal";
 		$offset = "";
 		$category = "";
