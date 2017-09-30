@@ -779,16 +779,19 @@ function header_slider_metabox() {
 		    'id'   => 'button_1_name',
 		    'type' => 'text_small',
 		) );
+
 		$settings->add_group_field( $group_field_id, array(
 		    'name' => 'Button First (URL)',
 		    'id'   => 'button_1_url',
 		    'type' => 'text_url',
 		) );
+
 		$settings->add_group_field( $group_field_id, array(
 		    'name' => 'Button Second (Name)',
 		    'id'   => 'button_2_name',
 		    'type' => 'text_small',
 		) );
+
 		$settings->add_group_field( $group_field_id, array(
 		    'name' => 'Button Second (URL)',
 		    'id'   => 'button_2_url',
@@ -801,9 +804,19 @@ function header_slider_metabox() {
 	    'type' => 'rgba_colorpicker',
 	    'default'  => ' ',
 
-	) );
+		) );
 
-
+		$settings->add_group_field( $group_field_id, array(
+			'name'             => esc_html__( 'Content Position', 'magazin' ),
+			'id'               => 'position',
+			'type'             => 'radio_inline',
+			'show_option_none' => 'Off ',
+			'options'          => array(
+				'mt-slide-left' => esc_html__( 'Left', 'magazin' ),
+				'mt-slide-center' => esc_html__( 'Center', 'magazin' ),
+				'mt-slide-right' => esc_html__( 'Right', 'magazin' ),
+			),
+		) );
 
 }
 add_action( 'cmb2_admin_init', 'header_slider_metabox' );
