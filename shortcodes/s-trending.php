@@ -217,7 +217,7 @@ function posts_trending( $atts, $content = null ) {
 										$shortcode .='<span class="video-icon"></span>';
 									}
 									if ( has_post_thumbnail() ) {
-										$shortcode .='<div class="mt-post-image" ><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy="'. get_the_post_thumbnail_url(get_the_ID(),'medium').'" alt="'.get_the_title().'"/></div>';
+										$shortcode .='<div class="mt-post-image" ><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy="'. get_the_post_thumbnail_url(get_the_ID(),'large').'" alt="'.get_the_title().'"/></div>';
 									}
 									if ( !has_post_format( 'video' ) ) {
 										$shortcode .='<div class="poster-info">';
