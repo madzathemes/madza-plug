@@ -677,6 +677,13 @@ function header_settings_metabox() {
 	) );
 
 	$settings->add_field( array(
+			'name' => 'Sub Title',
+			'id'   => $prefix . 'sub_title',
+			'type' => 'text',
+			// 'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
+	) );
+
+	$settings->add_field( array(
     'name'    => 'Title Background Image',
     'desc'    => 'Upload an image for title background',
     'id'      => $prefix . 'title_bg',
