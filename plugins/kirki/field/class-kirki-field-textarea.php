@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       2.2.7
  */
 
@@ -21,11 +21,9 @@ class Kirki_Field_Textarea extends Kirki_Field_Kirki_Generic {
 	 */
 	protected function set_choices() {
 
-		if ( ! is_array( $this->choices ) ) {
-			$this->choices = array();
-		}
-		$this->choices['element'] = 'textarea';
-		$this->choices['rows']    = '5';
-
+		$this->choices = array(
+			'element' => 'textarea',
+			'rows'    => 5,
+		);
 	}
 }

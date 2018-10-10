@@ -5,8 +5,8 @@
  * @package     Kirki
  * @category    Core
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  */
 
 /**
@@ -34,10 +34,10 @@ final class Kirki_Config {
 	/**
 	 * The configuration ID.
 	 *
-	 * @access protected
+	 * @access public
 	 * @var string
 	 */
-	protected $id = 'global';
+	public $id = 'global';
 
 	/**
 	 * Capability (fields will inherit this).
@@ -84,19 +84,18 @@ final class Kirki_Config {
 	 * Use the get_instance() static method to get the instance you need.
 	 *
 	 * @access private
-	 *
-	 * @param string $id     @see Kirki_Config::get_instance().
-	 * @param array  $args   @see Kirki_Config::get_instance().
+	 * @param string $config_id @see Kirki_Config::get_instance().
+	 * @param array  $args      @see Kirki_Config::get_instance().
 	 */
-	private function __construct( $id = 'global', $args = array() ) {
+	private function __construct( $config_id = 'global', $args = array() ) {
 
 		// Get defaults from the class.
 		$defaults = get_class_vars( __CLASS__ );
-		// Skip the what we don't need in this context.
+		// Skip what we don't need in this context.
 		unset( $defaults['config_final'] );
 		unset( $defaults['instances'] );
-		// Apply any kirki/config global filters.
-		$defaults = apply_filters( 'kirki/config', $defaults );
+		// Apply any kirki_config global filters.
+		$defaults = apply_filters( 'kirki_config', $defaults );
 		// Merge our args with the defaults.
 		$args = wp_parse_args( $args, $defaults );
 
@@ -107,10 +106,14 @@ final class Kirki_Config {
 				$args[ $key ] = $value;
 			}
 		}
+		$this->id = $config_id;
 
-		$this->config_final       = $args;
-		$this->config_final['id'] = $id;
-
+		$this->config_final = wp_parse_args(
+			array(
+				'id' => $config_id,
+			),
+			$args
+		);
 	}
 
 	/**
@@ -136,7 +139,6 @@ final class Kirki_Config {
 	 * @return Kirki_Config
 	 */
 	public static function get_instance( $id = 'global', $args = array() ) {
-
 		$id = trim( esc_attr( $id ) );
 		$id = ( '' === $id ) ? 'global' : $id;
 
@@ -149,15 +151,29 @@ final class Kirki_Config {
 	}
 
 	/**
+	 * Get the IDs of all current configs.
+	 *
+	 * @static
+	 * @access public
+	 * @since 3.0.22
+	 * @return array
+	 */
+	public static function get_config_ids() {
+		$configs = array();
+		foreach ( self::$instances as $instance ) {
+			$configs[] = $instance->id;
+		}
+		return array_unique( $configs );
+	}
+
+	/**
 	 * Returns the $config_final property
 	 *
 	 * @access public
-	 *
 	 * @return array
 	 */
 	public function get_config() {
 
 		return $this->config_final;
-
 	}
 }

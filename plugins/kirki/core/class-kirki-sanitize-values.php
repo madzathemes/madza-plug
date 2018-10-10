@@ -6,8 +6,8 @@
  * @package     Kirki
  * @category    Core
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       1.0
  */
 
@@ -20,20 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * A simple wrapper class for static methods.
  */
 class Kirki_Sanitize_Values {
-
-	/**
-	 * Fallback for non-existing methods.
-	 *
-	 * @static
-	 * @access public
-	 * @param string $name The method we're trying to access.
-	 * @param mixed  $arguments The arguments the method we're trying to call accepts.
-	 * @return mixed The $arguments provided.
-	 */
-	public static function __callStatic( $name, $arguments ) {
-		error_log( "Kirki_Sanitize_Values::$name does not exist" );
-		return $arguments;
-	}
 
 	/**
 	 * Checkbox sanitization callback.
@@ -50,7 +36,8 @@ class Kirki_Sanitize_Values {
 	 * @return bool Whether the checkbox is checked.
 	 */
 	public static function checkbox( $value ) {
-		return Kirki_Field_Checkbox::sanitize( $value );
+		$obj = new Kirki_Field_Checkbox();
+		return (bool) $obj->sanitize( $value );
 	}
 
 	/**
@@ -114,13 +101,13 @@ class Kirki_Sanitize_Values {
 			return '';
 		}
 
-		// If auto, return auto.
-		if ( 'auto' === $value ) {
-			return 'auto';
+		// If auto, inherit or initial, return the value.
+		if ( 'auto' === $value || 'initial' === $value || 'inherit' === $value || 'normal' === $value ) {
+			return $value;
 		}
 
 		// Return empty if there are no numbers in the value.
-		if ( ! preg_match( '#[0-9]#' , $value ) ) {
+		if ( ! preg_match( '#[0-9]#', $value ) ) {
 			return '';
 		}
 
@@ -134,7 +121,7 @@ class Kirki_Sanitize_Values {
 		$unit_used = '';
 
 		// An array of all valid CSS units. Their order was carefully chosen for this evaluation, don't mix it up!!!
-		$units = array( 'rem', 'em', 'ex', '%', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ch', 'vh', 'vw', 'vmin', 'vmax' );
+		$units = array( 'fr', 'rem', 'em', 'ex', '%', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ch', 'vh', 'vw', 'vmin', 'vmax' );
 		foreach ( $units as $unit ) {
 			if ( false !== strpos( $value, $unit ) ) {
 				$unit_used = $unit;

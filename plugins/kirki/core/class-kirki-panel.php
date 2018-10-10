@@ -5,8 +5,8 @@
  * @package     Kirki
  * @category    Core
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       1.0
  */
 
@@ -33,7 +33,7 @@ class Kirki_Panel {
 	 */
 	public function __construct( $args ) {
 
-		$this->panel_types = apply_filters( 'kirki/panel_types', $this->panel_types );
+		$this->panel_types = apply_filters( 'kirki_panel_types', $this->panel_types );
 		$this->add_panel( $args );
 
 	}

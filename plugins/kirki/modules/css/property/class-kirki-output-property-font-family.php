@@ -4,58 +4,62 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       2.2.0
  */
 
-if ( ! class_exists( 'Kirki_Output_Property_Font_Family' ) ) {
+/**
+ * Output overrides.
+ */
+class Kirki_Output_Property_Font_Family extends Kirki_Output_Property {
 
 	/**
-	 * Output overrides.
+	 * Modifies the value.
+	 *
+	 * @access protected
 	 */
-	class Kirki_Output_Property_Font_Family extends Kirki_Output_Property {
+	protected function process_value() {
 
-		/**
-		 * Modifies the value.
-		 *
-		 * @access protected
-		 */
-		protected function process_value() {
+		$google_fonts_array = Kirki_Fonts::get_google_fonts();
+		$backup_fonts       = Kirki_Fonts::get_backup_fonts();
 
-			$google_fonts_array = Kirki_Fonts::get_google_fonts();
-			$backup_fonts       = Kirki_Fonts::get_backup_fonts();
+		$family = $this->value;
+		$backup = '';
+		if ( is_array( $this->value ) && isset( $this->value[0] ) && isset( $this->value[1] ) ) {
+			$family = $this->value[0];
+			$backup = $this->value[1];
+		}
 
-			// Make sure the value is a string.
-			// If not, then early exit.
-			if ( ! is_string( $this->value ) ) {
+		// Make sure the value is a string.
+		// If not, then early exit.
+		if ( ! is_string( $family ) ) {
+			return;
+		}
+
+		// Hack for standard fonts.
+		$family = str_replace( '&quot;', '"', $family );
+
+		// Add backup font.
+		if ( Kirki_Fonts::is_google_font( $family ) ) {
+
+			if ( '' === $backup && isset( $google_fonts_array[ $family ] ) && isset( $backup_fonts[ $google_fonts_array[ $family ]['category'] ] ) ) {
+				$backup = $backup_fonts[ $google_fonts_array[ $family ]['category'] ];
+			}
+
+			// Add double quotes if needed.
+			if ( false !== strpos( $family, ' ' ) && false === strpos( $family, '"' ) ) {
+				$this->value = '"' . $family . '", ' . $backup;
 				return;
 			}
-
-			// Hack for standard fonts.
-			$this->value = str_replace( '&quot;', '"', $this->value );
-
-			// Add backup font.
-			if ( Kirki_Fonts::is_google_font( $this->value ) ) {
-
-				if ( isset( $google_fonts_array[ $this->value ] ) && isset( $google_fonts_array[ $this->value ]['category'] ) ) {
-					if ( isset( $backup_fonts[ $google_fonts_array[ $this->value ]['category'] ] ) ) {
-
-						// Add double quotes if needed.
-						if ( false !== strpos( $this->value, ' ' ) && false === strpos( $this->value, '"' ) ) {
-							$this->value = '"' . $this->value . '", ' . $backup_fonts[ $google_fonts_array[ $this->value ]['category'] ];
-						} else {
-							$this->value .= ', ' . $backup_fonts[ $google_fonts_array[ $this->value ]['category'] ];
-						}
-					}
-				}
-			} else {
-
-				// Add double quotes if needed.
-				if ( false !== strpos( $this->value, ' ' ) && false === strpos( $this->value, '"' ) ) {
-					$this->value = '"' . $this->value . '"';
-				}
-			}
+			$this->value = $family . ', ' . $backup;
+			return;
 		}
+
+		// Add double quotes if needed.
+		if ( false !== strpos( $family, ' ' ) && false === strpos( $family, '"' ) ) {
+			$this->value = '"' . $family . '"';
+		}
+		$this->value = html_entity_decode( $family, ENT_QUOTES );
 	}
 }

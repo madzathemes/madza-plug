@@ -5,9 +5,9 @@
  * @package     Kirki
  * @category    Modules
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
- * @since       2.4.0
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
+ * @since       3.0.0
  */
 
 /**
@@ -16,10 +16,38 @@
 class Kirki_Modules_Selective_Refresh {
 
 	/**
-	 * Adds any necessary actions & filters.
+	 * The object instance.
+	 *
+	 * @static
+	 * @access private
+	 * @since 3.0.0
+	 * @var object
 	 */
-	public function __construct() {
+	private static $instance;
+
+	/**
+	 * Adds any necessary actions & filters.
+	 *
+	 * @access protected
+	 */
+	protected function __construct() {
 		add_action( 'customize_register', array( $this, 'register_partials' ), 99 );
+	}
+
+	/**
+	 * Gets an instance of this object.
+	 * Prevents duplicate instances which avoid artefacts and improves performance.
+	 *
+	 * @static
+	 * @access public
+	 * @since 3.0.0
+	 * @return object
+	 */
+	public static function get_instance() {
+		if ( ! self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
 	}
 
 	/**
@@ -46,9 +74,11 @@ class Kirki_Modules_Selective_Refresh {
 				foreach ( $field['partial_refresh'] as $partial_refresh => $partial_refresh_args ) {
 					// If we have all we need, create the selective refresh call.
 					if ( isset( $partial_refresh_args['render_callback'] ) && isset( $partial_refresh_args['selector'] ) ) {
-						$partial_refresh_args = wp_parse_args( $partial_refresh_args, array(
-							'settings' => $field['settings'],
-						) );
+						$partial_refresh_args = wp_parse_args(
+							$partial_refresh_args, array(
+								'settings' => $field['settings'],
+							)
+						);
 						$wp_customize->selective_refresh->add_partial( $partial_refresh, $partial_refresh_args );
 					}
 				}

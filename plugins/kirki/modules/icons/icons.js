@@ -1,8 +1,9 @@
+/* global kirkiIcons */
 jQuery( document ).ready( function() {
 
 	'use strict';
 
-	if ( 'undefined' !== typeof kirkiIcons.section ) {
+	if ( ! _.isUndefined( kirkiIcons.section ) ) {
 
 		// Parse sections and add icons.
 		_.each( kirkiIcons.section, function( icon, sectionID ) {
@@ -16,7 +17,7 @@ jQuery( document ).ready( function() {
 
 	}
 
-	if ( 'undefined' !== typeof kirkiIcons.panel ) {
+	if ( ! _.isUndefined( kirkiIcons.panel ) ) {
 
 		_.each( kirkiIcons.panel, function( icon, panelID ) {
 
@@ -26,4 +27,4 @@ jQuery( document ).ready( function() {
 
 	}
 
-});
+} );

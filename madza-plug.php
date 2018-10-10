@@ -4,7 +4,7 @@ Plugin Name: Madza Plug
 Plugin URI: https://madzathemes.net
 Description: Madza Plug Plugin
 Author: Madars Bitenieks
-Version: 1.1
+Version: 1.2
 Author URI: https://madzathemes.net
 */
 include_once ('madza-metabox.php');

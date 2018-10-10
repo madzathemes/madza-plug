@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       2.3.2
  */
 
@@ -23,5 +23,16 @@ class Kirki_Field_Dimension extends Kirki_Field {
 
 		$this->type = 'kirki-dimension';
 
+	}
+
+	/**
+	 * Sanitizes the value.
+	 *
+	 * @access public
+	 * @param string $value The value.
+	 * @return string
+	 */
+	public function sanitize( $value ) {
+		return sanitize_text_field( $value );
 	}
 }

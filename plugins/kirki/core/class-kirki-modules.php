@@ -5,9 +5,9 @@
  * @package     Kirki
  * @category    Core
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
- * @since       2.4.0
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
+ * @since       3.0.0
  */
 
 /**
@@ -20,7 +20,7 @@ class Kirki_Modules {
 	 *
 	 * @static
 	 * @access private
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 * @var array
 	 */
 	private static $modules = array();
@@ -30,7 +30,7 @@ class Kirki_Modules {
 	 *
 	 * @static
 	 * @access private
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 * @var array
 	 */
 	private static $active_modules = array();
@@ -39,7 +39,7 @@ class Kirki_Modules {
 	 * Constructor.
 	 *
 	 * @access public
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 */
 	public function __construct() {
 
@@ -49,26 +49,31 @@ class Kirki_Modules {
 	}
 
 	/**
-	 * Set the default modules and apply the 'kirki/modules' filter.
+	 * Set the default modules and apply the 'kirki_modules' filter.
 	 *
 	 * @access private
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 */
 	private function default_modules() {
 
-		self::$modules = apply_filters( 'kirki/modules', array(
-			'css'                => 'Kirki_Modules_CSS',
-			'customizer-styling' => 'Kirki_Modules_Customizer_Styling',
-			'icons'              => 'Kirki_Modules_Icons',
-			'loading'            => 'Kirki_Modules_Loading',
-			'reset'              => 'Kirki_Modules_Reset',
-			'tooltips'           => 'Kirki_Modules_Tooltips',
-			'branding'           => 'Kirki_Modules_Customizer_Branding',
-			'postMessage'        => 'Kirki_Modules_postMessage',
-			'selective-refresh'  => 'Kirki_Modules_Selective_Refresh',
-			'field-dependencies' => 'Kirki_Modules_Field_Dependencies',
-			'custom-sections'    => 'Kirki_Modules_Custom_Sections',
-		) );
+		self::$modules = apply_filters(
+			'kirki_modules', array(
+				'css'                => 'Kirki_Modules_CSS',
+				'css-vars'           => 'Kirki_Modules_CSS_Vars',
+				'customizer-styling' => 'Kirki_Modules_Customizer_Styling',
+				'icons'              => 'Kirki_Modules_Icons',
+				'loading'            => 'Kirki_Modules_Loading',
+				'tooltips'           => 'Kirki_Modules_Tooltips',
+				'branding'           => 'Kirki_Modules_Customizer_Branding',
+				'postMessage'        => 'Kirki_Modules_PostMessage',
+				'selective-refresh'  => 'Kirki_Modules_Selective_Refresh',
+				'field-dependencies' => 'Kirki_Modules_Field_Dependencies',
+				'custom-sections'    => 'Kirki_Modules_Custom_Sections',
+				'webfonts'           => 'Kirki_Modules_Webfonts',
+				'webfont-loader'     => 'Kirki_Modules_Webfont_Loader',
+				'preset'             => 'Kirki_Modules_Preset',
+			)
+		);
 
 	}
 
@@ -76,16 +81,17 @@ class Kirki_Modules {
 	 * Instantiates the modules.
 	 *
 	 * @access private
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 */
 	private function init() {
 
 		foreach ( self::$modules as $key => $module_class ) {
 			if ( class_exists( $module_class ) ) {
-				self::$active_modules[ $key ] = new $module_class();
+				// Use this syntax instead of $module_class::get_instance()
+				// for PHP 5.2 compatibility.
+				self::$active_modules[ $key ] = call_user_func( array( $module_class, 'get_instance' ) );
 			}
 		}
-
 	}
 
 	/**
@@ -94,7 +100,7 @@ class Kirki_Modules {
 	 * @static
 	 * @access public
 	 * @param string $module The classname of the module to add.
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 */
 	public static function add_module( $module ) {
 
@@ -110,7 +116,7 @@ class Kirki_Modules {
 	 * @static
 	 * @access public
 	 * @param string $module The classname of the module to add.
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 */
 	public static function remove_module( $module ) {
 
@@ -125,7 +131,7 @@ class Kirki_Modules {
 	 *
 	 * @static
 	 * @access public
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 * @return array
 	 */
 	public static function get_modules() {
@@ -139,7 +145,7 @@ class Kirki_Modules {
 	 *
 	 * @static
 	 * @access public
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 * @return array
 	 */
 	public static function get_active_modules() {

@@ -14,7 +14,7 @@
       position: relative;
       visibility: visible;
       height: auto;
-      margin-left: -300px;
+      margin-left: -100%;
 
       h3 {
         .customize-action {
@@ -23,4 +23,13 @@
       }
     }
   }
+}
+
+#customize-theme-controls .customize-pane-child.current-section-parent,
+.in-sub-panel #customize-theme-controls .customize-pane-child.current-panel-parent {
+  transform: translateX(-100%);
+}
+
+.control-section-kirki-nested {
+  margin: 0 -12px;
 }

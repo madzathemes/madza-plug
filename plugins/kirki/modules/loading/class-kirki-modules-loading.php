@@ -4,9 +4,9 @@
  *
  * @package     Kirki
  * @subpackage  Modules
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
- * @since       2.4.0
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
+ * @since       3.0.0
  */
 
 /**
@@ -15,26 +15,62 @@
 class Kirki_Modules_Loading {
 
 	/**
+	 * The object instance.
+	 *
+	 * @static
+	 * @access private
+	 * @since 3.0.0
+	 * @var object
+	 */
+	private static $instance;
+
+	/**
 	 * Constructor.
 	 *
-	 * @access public
+	 * @access protected
 	 */
-	public function __construct() {
+	protected function __construct() {
+		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * Gets an instance of this object.
+	 * Prevents duplicate instances which avoid artefacts and improves performance.
+	 *
+	 * @static
+	 * @access public
+	 * @since 3.0.0
+	 * @return object
+	 */
+	public static function get_instance() {
+		if ( ! self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Runs on init.
+	 *
+	 * @access public
+	 * @since 3.0.0
+	 */
+	public function init() {
+
 		global $wp_customize;
 		if ( ! $wp_customize ) {
 			return;
 		}
-
-		// Allow disabling the custom loader using the kirki/config filter.
-		$config = apply_filters( 'kirki/config', array() );
+		// Allow disabling the custom loader using the kirki_config filter.
+		$config = apply_filters( 'kirki_config', array() );
 		if ( isset( $config['disable_loader'] ) && true === $config['disable_loader'] ) {
 			return;
 		}
-
 		// Add the "loading" icon.
 		add_action( 'wp_footer', array( $this, 'add_loader_to_footer' ) );
 		add_action( 'wp_head', array( $this, 'add_loader_styles_to_header' ), 99 );
 		$this->remove_default_loading_styles();
+
 	}
 
 	/**

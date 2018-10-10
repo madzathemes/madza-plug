@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       2.2.7
  */
 
@@ -33,6 +33,20 @@ class Kirki_Field_Repeater extends Kirki_Field {
 		$this->type = 'repeater';
 
 	}
+
+	/**
+	 * Sets the $transport
+	 *
+	 * @access protected
+	 */
+	protected function set_transport() {
+
+		// Force using refresh mode.
+		// Currently the repeater control does not support postMessage.
+		$this->transport = 'refresh';
+
+	}
+
 
 	/**
 	 * Sets the $sanitize_callback
@@ -83,6 +97,9 @@ class Kirki_Field_Repeater extends Kirki_Field {
 					unset( $value[ $row_id ][ $subfield_id ] );
 				}
 				// Get the subfield-type.
+				if ( ! isset( $this->fields[ $subfield_id ]['type'] ) ) {
+					continue;
+				}
 				$subfield_type = $this->fields[ $subfield_id ]['type'];
 
 				// Allow using a sanitize-callback on a per-field basis.
@@ -105,11 +122,11 @@ class Kirki_Field_Repeater extends Kirki_Field {
 							break;
 						case 'color':
 							// Instantiate the object.
-							$color_obj = ariColor::newColor( $subfield_value );
+							$color_obj       = ariColor::newColor( $subfield_value );
 							$$subfield_value = $color_obj->toCSS( $color_obj->mode );
 							break;
 						case 'text':
-							$subfield_value = esc_textarea( $subfield_value );
+							$subfield_value = sanitize_text_field( $subfield_value );
 							break;
 						case 'url':
 						case 'link':
@@ -122,15 +139,30 @@ class Kirki_Field_Repeater extends Kirki_Field {
 							$subfield_value = esc_attr( $subfield_value );
 							break;
 						case 'checkbox':
-							$subfield_value = (string) intval( $subfield_value );
+							$subfield_value = (bool) $subfield_value;
 							break;
 						case 'select':
+							if ( isset( $this->fields[ $subfield_id ]['multiple'] ) ) {
+								if ( true === $this->fields[ $subfield_id ]['multiple'] ) {
+									$multiple = 2;
+								}
+								$multiple = (int) $this->fields[ $subfield_id ]['multiple'];
+								if ( 1 < $multiple ) {
+									$subfield_value = (array) $subfield_value;
+									foreach ( $subfield_value as $sub_subfield_key => $sub_subfield_value ) {
+										$subfield_value[ $sub_subfield_key ] = esc_attr( $sub_subfield_value );
+									}
+								} else {
+									$subfield_value = esc_attr( $subfield_value );
+								}
+							}
+							break;
 						case 'radio':
 						case 'radio-image':
 							$subfield_value = esc_attr( $subfield_value );
 							break;
 						case 'textarea':
-							$subfield_value = wp_kses_post( $subfield_value );
+							$subfield_value = html_entity_decode( wp_kses_post( $subfield_value ) );
 
 					}
 				}

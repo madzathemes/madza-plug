@@ -7,9 +7,9 @@
  * @package     Kirki
  * @category    Modules
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
- * @since       2.4.0
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
+ * @since       3.0.0
  */
 
 // Exit if accessed directly.
@@ -23,15 +23,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Kirki_Modules_Customizer_Branding {
 
 	/**
+	 * The object instance.
+	 *
+	 * @static
+	 * @access private
+	 * @since 3.0.0
+	 * @var object
+	 */
+	private static $instance;
+
+	/**
 	 * Constructor.
 	 *
-	 * @access public
-	 * @since 2.4.0
+	 * @access protected
+	 * @since 3.0.0
 	 */
-	public function __construct() {
-
+	protected function __construct() {
 		add_action( 'customize_controls_print_scripts', array( $this, 'customize_controls_print_scripts' ) );
+	}
 
+	/**
+	 * Gets an instance of this object.
+	 * Prevents duplicate instances which avoid artefacts and improves performance.
+	 *
+	 * @static
+	 * @access public
+	 * @since 3.0.0
+	 * @return object
+	 */
+	public static function get_instance() {
+		if ( ! self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
 	}
 
 	/**
@@ -40,11 +64,11 @@ class Kirki_Modules_Customizer_Branding {
 	 * The actual branding is handled via JS.
 	 *
 	 * @access public
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 */
 	public function customize_controls_print_scripts() {
 
-		$config = apply_filters( 'kirki/config', array() );
+		$config = apply_filters( 'kirki_config', array() );
 		$vars   = array(
 			'logoImage'   => '',
 			'description' => '',
@@ -57,7 +81,7 @@ class Kirki_Modules_Customizer_Branding {
 		}
 
 		if ( ! empty( $vars['logoImage'] ) || ! empty( $vars['description'] ) ) {
-			wp_register_script( 'kirki-branding', Kirki::$url . '/modules/customizer-branding/branding.js' );
+			wp_register_script( 'kirki-branding', Kirki::$url . '/modules/customizer-branding/branding.js', array(), KIRKI_VERSION, false );
 			wp_localize_script( 'kirki-branding', 'kirkiBranding', $vars );
 			wp_enqueue_script( 'kirki-branding' );
 		}

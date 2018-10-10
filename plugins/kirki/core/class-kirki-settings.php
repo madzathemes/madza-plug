@@ -5,8 +5,8 @@
  * @package     Kirki
  * @category    Core
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       1.0
  */
 
@@ -66,10 +66,14 @@ class Kirki_Settings {
 	final private function add_settings( $args = array() ) {
 
 		// Get the classname we'll be using to create our setting(s).
+		$classname = false;
+		if ( isset( $args['option_type'] ) && array_key_exists( $args['option_type'], $this->setting_types ) ) {
+			$classname = $this->setting_types[ $args['option_type'] ];
+		}
 		if ( ! isset( $args['type'] ) || ! array_key_exists( $args['type'], $this->setting_types ) ) {
 			$args['type'] = 'default';
 		}
-		$classname = $this->setting_types[ $args['type'] ];
+		$classname = ! $classname ? $this->setting_types[ $args['type'] ] : $classname;
 
 		// If settings are defined as an array, then we need to go through them
 		// and call add_setting for each one of them separately.
@@ -80,7 +84,7 @@ class Kirki_Settings {
 				$args['default'] = array();
 			}
 			foreach ( $args['settings'] as $key => $value ) {
-				$default   = ( isset( $defaults[ $key ] ) ) ? $defaults[ $key ] : '';
+				$default = ( isset( $defaults[ $key ] ) ) ? $defaults[ $key ] : '';
 				$this->add_setting( $classname, $value, $default, $args['option_type'], $args['capability'], $args['transport'], $args['sanitize_callback'] );
 			}
 		}
@@ -103,29 +107,37 @@ class Kirki_Settings {
 	 */
 	final private function add_setting( $classname, $setting, $default, $type, $capability, $transport, $sanitize_callback ) {
 
-		$this->wp_customize->add_setting( new $classname( $this->wp_customize, $setting, array(
-			'default'           => $default,
-			'type'              => $type,
-			'capability'        => $capability,
-			'transport'         => $transport,
-			'sanitize_callback' => $sanitize_callback,
-		) ) );
+		$this->wp_customize->add_setting(
+			new $classname(
+				$this->wp_customize, $setting, array(
+					'default'           => $default,
+					'type'              => $type,
+					'capability'        => $capability,
+					'transport'         => $transport,
+					'sanitize_callback' => $sanitize_callback,
+				)
+			)
+		);
 
 	}
 
 	/**
 	 * Sets the $this->setting_types property.
-	 * Makes sure the kirki/setting_types filter is applied
+	 * Makes sure the kirki_setting_types filter is applied
 	 * and that the defined classes actually exist.
 	 * If a defined class does not exist, it is removed.
 	 */
 	final private function set_setting_types() {
 
-		// Apply the kirki/setting_types filter.
-		$this->setting_types = apply_filters( 'kirki/setting_types', array(
-			'default'  => 'Kirki_Settings_Default_Setting',
-			'repeater' => 'Kirki_Settings_Repeater_Setting',
-		) );
+		// Apply the kirki_setting_types filter.
+		$this->setting_types = apply_filters(
+			'kirki_setting_types', array(
+				'default'     => 'WP_Customize_Setting',
+				'repeater'    => 'Kirki_Settings_Repeater_Setting',
+				'user_meta'   => 'Kirki_Setting_User_Meta',
+				'site_option' => 'Kirki_Setting_Site_Option',
+			)
+		);
 
 		// Make sure the defined classes actually exist.
 		foreach ( $this->setting_types as $key => $classname ) {

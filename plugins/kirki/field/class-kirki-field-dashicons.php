@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       2.2.7
  */
 
@@ -37,9 +37,6 @@ class Kirki_Field_Dashicons extends Kirki_Field {
 		if ( ! empty( $this->sanitize_callback ) ) {
 			return;
 		}
-		// Custom fields don't actually save any value.
-		// just use __return_true.
 		$this->sanitize_callback = 'esc_attr';
-
 	}
 }

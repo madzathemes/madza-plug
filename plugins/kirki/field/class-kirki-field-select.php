@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       2.2.7
  */
 
@@ -26,6 +26,15 @@ class Kirki_Field_Select extends Kirki_Field {
 	protected $multiple = 1;
 
 	/**
+	 * Placeholder text.
+	 *
+	 * @access protected
+	 * @since 3.0.21
+	 * @var string|false
+	 */
+	protected $placeholder = false;
+
+	/**
 	 * Sets the control type.
 	 *
 	 * @access protected
@@ -42,9 +51,17 @@ class Kirki_Field_Select extends Kirki_Field {
 	 * @access protected
 	 */
 	protected function set_multiple() {
-
 		$this->multiple = absint( $this->multiple );
+	}
 
+	/**
+	 * The placeholder text.
+	 *
+	 * @access protected
+	 * @since 3.0.21
+	 */
+	protected function set_placeholder() {
+		$this->placeholder = esc_attr( $this->placeholder );
 	}
 
 	/**
@@ -75,7 +92,10 @@ class Kirki_Field_Select extends Kirki_Field {
 
 		if ( is_array( $value ) ) {
 			foreach ( $value as $key => $subvalue ) {
-				$value[ $key ] = esc_attr( $subvalue );
+				if ( '' !== $subvalue || isset( $this->choices[''] ) ) {
+					$key           = sanitize_key( $key );
+					$value[ $key ] = esc_attr( $subvalue );
+				}
 			}
 			return $value;
 		}
@@ -87,7 +107,7 @@ class Kirki_Field_Select extends Kirki_Field {
 	 * Sets the default value.
 	 *
 	 * @access protected
-	 * @since 2.4.0
+	 * @since 3.0.0
 	 */
 	protected function set_default() {
 

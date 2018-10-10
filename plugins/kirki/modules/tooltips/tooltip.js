@@ -1,29 +1,55 @@
+/* global kirkiTooltips */
 jQuery( document ).ready( function() {
 
-	_.each( kirkiTooltips, function( tooltip ) {
+	function kirkiTooltipAdd( control ) {
+		_.each( kirkiTooltips, function( tooltip ) {
+			let trigger,
+				controlID,
+				content;
 
-		var trigger   = '<span class="tooltip-trigger" id="tooltip-' + tooltip.id + '" data-setting="' + tooltip.id + '"><span class="dashicons dashicons-editor-help"></span></span>',
-		    controlID = '#customize-control-' + tooltip.id,
-		    content   = '<div class="tooltip-content" id="tooltip-content-' + tooltip.id + '">' + tooltip.content + '</div>';
+			if ( tooltip.id !== control.id ) {
+				return;
+			}
 
-		// Add the trigger & content.
-		jQuery( '<div class="tooltip-wrapper">' + trigger + content + '</div>' ).prependTo( controlID );
+			if ( control.container.find( '.tooltip-content' ).length ) {
+				return;
+			}
 
-	});
+			trigger   = '<span class="tooltip-trigger" data-setting="' + tooltip.id + '"><span class="dashicons dashicons-editor-help"></span></span>';
+			controlID = '#customize-control-' + tooltip.id;
+			content   = '<div class="tooltip-content hidden" data-setting="' + tooltip.id + '">' + tooltip.content + '</div>';
 
-	// Hide the tooltips content by default.
-	jQuery( '.tooltip-content' ).hide();
+			// Add the trigger & content.
+			jQuery( '<div class="tooltip-wrapper">' + trigger + content + '</div>' ).prependTo( controlID );
 
-	// Handle onclick events.
-	jQuery( '.tooltip-trigger' ).on( 'click', function() {
+			// Handle onclick events.
+			jQuery( '.tooltip-trigger[data-setting="' + tooltip.id + '"]' ).on( 'click', function() {
+				jQuery( '.tooltip-content[data-setting="' + tooltip.id + '"]' ).toggleClass( 'hidden' );
+			} );
+		} );
 
-		var $setting  = jQuery( this ).data( 'setting' ),
-		    contentID = '#tooltip-content-' + kirkiTooltips[ $setting ].id,
-		    $this     = jQuery( this );
+		// Close tooltips if we click anywhere else.
+		jQuery( document ).mouseup( function( e ) {
 
-		$this.toggleClass( 'open' );
-		jQuery( contentID ).toggleClass( 'open' );
+			if ( ! jQuery( '.tooltip-content' ).is( e.target ) ) {
+				if ( ! jQuery( '.tooltip-content' ).hasClass( 'hidden' ) ) {
+					jQuery( '.tooltip-content' ).addClass( 'hidden' );
+				}
+			}
+		} );
+	}
 
-	});
-
+	wp.customize.control.each( function( control ) {
+		wp.customize.section( control.section(), function( section ) {
+			if ( section.expanded() || wp.customize.settings.autofocus.control === control.id ) {
+				kirkiTooltipAdd( control );
+			} else {
+				section.expanded.bind( function( expanded ) {
+					if ( expanded ) {
+						kirkiTooltipAdd( control );
+					}
+				} );
+			}
+		} );
+	} );
 } );

@@ -5,8 +5,8 @@
  * @package     Kirki
  * @category    Core
  * @author      Aristeides Stathopoulos
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  */
 
 /**
@@ -90,7 +90,7 @@ class Kirki_Control {
 
 	/**
 	 * Sets the $control_types property.
-	 * Makes sure the kirki/control_types filter is applied
+	 * Makes sure the kirki_control_types filter is applied
 	 * and that the defined classes actually exist.
 	 * If a defined class does not exist, it is removed.
 	 *
@@ -103,39 +103,7 @@ class Kirki_Control {
 			return;
 		}
 
-		self::$control_types = apply_filters( 'kirki/control_types', array(
-			'checkbox'              => 'WP_Customize_Control',
-			'kirki-code'            => 'Kirki_Control_Code',
-			'kirki-color'           => 'Kirki_Control_Color',
-			'kirki-color-palette'   => 'Kirki_Control_Color_Palette',
-			'kirki-custom'          => 'Kirki_Control_Custom',
-			'kirki-date'            => 'Kirki_Control_Date',
-			'kirki-dashicons'       => 'Kirki_Control_Dashicons',
-			'kirki-dimension'       => 'Kirki_Control_Dimension',
-			'kirki-dimensions'      => 'Kirki_Control_Dimensions',
-			'kirki-editor'          => 'Kirki_Control_Editor',
-			'kirki-multicolor'      => 'Kirki_Control_Multicolor',
-			'kirki-multicheck'      => 'Kirki_Control_MultiCheck',
-			'kirki-number'          => 'Kirki_Control_Number',
-			'kirki-palette'         => 'Kirki_Control_Palette',
-			'kirki-preset'          => 'Kirki_Control_Preset',
-			'kirki-radio'           => 'Kirki_Control_Radio',
-			'kirki-radio-buttonset' => 'Kirki_Control_Radio_ButtonSet',
-			'kirki-radio-image'     => 'Kirki_Control_Radio_Image',
-			'repeater'              => 'Kirki_Control_Repeater',
-			'kirki-select'          => 'Kirki_Control_Select',
-			'kirki-slider'          => 'Kirki_Control_Slider',
-			'kirki-sortable'        => 'Kirki_Control_Sortable',
-			'kirki-spacing'         => 'Kirki_Control_Dimensions',
-			'kirki-switch'          => 'Kirki_Control_Switch',
-			'kirki-generic'         => 'Kirki_Control_Generic',
-			'kirki-toggle'          => 'Kirki_Control_Toggle',
-			'kirki-typography'      => 'Kirki_Control_Typography',
-			'dropdown-pages'        => 'Kirki_Control_Dropdown_Pages',
-			'image'                 => 'WP_Customize_Image_Control',
-			'cropped_image'         => 'WP_Customize_Cropped_Image_Control',
-			'upload'                => 'WP_Customize_Upload_Control',
-		) );
+		self::$control_types = apply_filters( 'kirki_control_types', array() );
 
 		// Make sure the defined classes actually exist.
 		foreach ( self::$control_types as $key => $classname ) {

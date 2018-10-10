@@ -4,8 +4,8 @@
  *
  * @package     Kirki
  * @subpackage  Controls
- * @copyright   Copyright (c) 2016, Aristeides Stathopoulos
- * @license     http://opensource.org/licenses/https://opensource.org/licenses/MIT
+ * @copyright   Copyright (c) 2017, Aristeides Stathopoulos
+ * @license    https://opensource.org/licenses/MIT
  * @since       2.2.7
  */
 
@@ -26,6 +26,40 @@ class Kirki_Field_Typography extends Kirki_Field {
 	}
 
 	/**
+	 * The class constructor.
+	 * Parses and sanitizes all field arguments.
+	 * Then it adds the field to Kirki::$fields.
+	 *
+	 * @access public
+	 * @param string $config_id    The ID of the config we want to use.
+	 *                             Defaults to "global".
+	 *                             Configs are handled by the Kirki_Config class.
+	 * @param array  $args         The arguments of the field.
+	 */
+	public function __construct( $config_id = 'global', $args = array() ) {
+		parent::__construct( $config_id, $args );
+		$this->set_default();
+	}
+
+	/**
+	 * Sets the default value.
+	 *
+	 * @access protected
+	 */
+	protected function set_default() {
+
+		// Accomodate the use of font-weight and convert to variant.
+		if ( isset( $this->default['font-weight'] ) ) {
+			$this->default['variant'] = ( 'regular' === $this->default['font-weight'] ) ? 400 : (string) intval( $this->default['font-weight'] );
+		}
+
+		// Make sure letter-spacing has units.
+		if ( isset( $this->default['letter-spacing'] ) && is_numeric( $this->default['letter-spacing'] ) && $this->default['letter-spacing'] ) {
+			$this->default['letter-spacing'] .= 'px';
+		}
+	}
+
+	/**
 	 * Sets the $sanitize_callback
 	 *
 	 * @access protected
@@ -37,7 +71,7 @@ class Kirki_Field_Typography extends Kirki_Field {
 		if ( ! empty( $this->sanitize_callback ) ) {
 			return;
 		}
-		$this->sanitize_callback = array( $this, 'sanitize' );
+		$this->sanitize_callback = array( __CLASS__, 'sanitize' );
 
 	}
 
@@ -70,7 +104,6 @@ class Kirki_Field_Typography extends Kirki_Field {
 
 			// Start going through each item in the $output array.
 			foreach ( $this->output as $output ) {
-				$output['function'] = 'css';
 
 				// If 'element' or 'property' are not defined, skip this.
 				if ( ! isset( $output['element'] ) ) {
@@ -78,9 +111,6 @@ class Kirki_Field_Typography extends Kirki_Field {
 				}
 				if ( is_array( $output['element'] ) ) {
 					$output['element'] = implode( ',', $output['element'] );
-				}
-				if ( false !== strpos( $output['element'], ':' ) ) {
-					$output['function'] = 'style';
 				}
 
 				// If we got this far, it's safe to add this.
@@ -102,6 +132,7 @@ class Kirki_Field_Typography extends Kirki_Field {
 	/**
 	 * Sanitizes typography controls
 	 *
+	 * @static
 	 * @since 2.2.0
 	 * @param array $value The value.
 	 * @return array
@@ -112,62 +143,80 @@ class Kirki_Field_Typography extends Kirki_Field {
 			return array();
 		}
 
-		// Escape the font-family.
-		if ( isset( $value['font-family'] ) ) {
-			$value['font-family'] = esc_attr( $value['font-family'] );
-		}
-
-		// Make sure we're using a valid variant.
-		// We're adding checks for font-weight as well for backwards-compatibility
-		// Versions 2.0 - 2.2 were using an integer font-weight.
-		if ( isset( $value['variant'] ) || isset( $value['font-weight'] ) ) {
-			if ( isset( $value['font-weight'] ) && ! empty( $value['font-weight'] ) ) {
-				if ( ! isset( $value['variant'] ) || empty( $value['variant'] ) ) {
-					$value['variant'] = $value['font-weight'];
-				}
-				unset( $value['font-weight'] );
-			}
-			$valid_variants = Kirki_Fonts::get_all_variants();
-			if ( ! array_key_exists( $value['variant'], $valid_variants ) ) {
-				$value['variant'] = 'regular';
-			}
-		}
-
-		// Make sure the saved value is "subsets" (plural) and not "subset".
-		// This is for compatibility with older versions.
-		if ( isset( $value['subset'] ) ) {
-			if ( ! empty( $value['subset'] ) && ! isset( $value['subsets'] ) || empty( $value['subset'] ) ) {
-				$value['subsets'] = $value['subset'];
-			}
-			unset( $value['subset'] );
-		}
-
-		// Make sure we're using a valid subset.
-		if ( isset( $value['subsets'] ) ) {
-			$valid_subsets = Kirki_Fonts::get_google_font_subsets();
-			$subsets_ok = array();
-			if ( is_array( $value['subsets'] ) ) {
-				foreach ( $value['subsets'] as $subset ) {
-					if ( array_key_exists( $subset, $valid_subsets ) ) {
-						$subsets_ok[] = $subset;
+		foreach ( $value as $key => $val ) {
+			switch ( $key ) {
+				case 'font-family':
+					$value['font-family'] = esc_attr( $val );
+					break;
+				case 'font-weight':
+					if ( isset( $value['variant'] ) ) {
+						break;
 					}
-				}
-				$value['subsets'] = $subsets_ok;
+					$value['variant'] = $val;
+					if ( isset( $value['font-style'] ) && 'italic' === $value['font-style'] ) {
+						$value['variant'] = ( '400' !== $val || 400 !== $val ) ? $value['variant'] . 'italic' : 'italic';
+					}
+					break;
+				case 'variant':
+					// Use 'regular' instead of 400 for font-variant.
+					$value['variant'] = ( 400 === $val || '400' === $val ) ? 'regular' : $val;
+					// Get font-weight from variant.
+					$value['font-weight'] = filter_var( $value['variant'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
+					$value['font-weight'] = ( 'regular' === $value['variant'] || 'italic' === $value['variant'] ) ? 400 : absint( $value['font-weight'] );
+					// Get font-style from variant.
+					if ( ! isset( $value['font-style'] ) ) {
+						$value['font-style'] = ( false === strpos( $value['variant'], 'italic' ) ) ? 'normal' : 'italic';
+					}
+					break;
+				case 'font-size':
+				case 'letter-spacing':
+				case 'word-spacing':
+				case 'line-height':
+					$value[ $key ] = '' === trim( $value[ $key ] ) ? '' : sanitize_text_field( $val );
+					break;
+				case 'text-align':
+					if ( ! in_array( $val, array( '', 'inherit', 'left', 'center', 'right', 'justify' ), true ) ) {
+						$value['text-align'] = '';
+					}
+					break;
+				case 'text-transform':
+					if ( ! in_array( $val, array( '', 'none', 'capitalize', 'uppercase', 'lowercase', 'initial', 'inherit' ), true ) ) {
+						$value['text-transform'] = '';
+					}
+					break;
+				case 'text-decoration':
+					if ( ! in_array( $val, array( '', 'none', 'underline', 'overline', 'line-through', 'initial', 'inherit' ), true ) ) {
+						$value['text-transform'] = '';
+					}
+					break;
+				case 'color':
+					$value['color'] = '' === $value['color'] ? '' : ariColor::newColor( $val )->toCSS( 'hex' );
+					break;
 			}
 		}
 
-		foreach ( $value as $key => $subvalue ) {
-
-			if ( in_array( $key, array( 'font-size', 'letter-spacing', 'word-spacing', 'line-height' ), true ) ) {
-				$value[ $key ] = Kirki_Sanitize_Values::css_dimension( $value[ $key ] );
-			} elseif ( 'text-align' === $key && ! in_array( $value['text-align'], array( 'inherit', 'left', 'center', 'right', 'justify' ), true ) ) {
-				$value['text-align'] = 'inherit';
-			} elseif ( 'text-transform' === $key && ! in_array( $value['text-transform'], array( 'none', 'capitalize', 'uppercase', 'lowercase', 'initial', 'inherit' ), true ) ) {
-				$value['text-transform'] = 'none';
-			} elseif ( 'color' === $key ) {
-				$value['color'] = ariColor::newColor( $value['color'] )->toCSS( 'hex' );
-			}
-		}
 		return $value;
+	}
+
+	/**
+	 * Sets the $choices
+	 *
+	 * @access protected
+	 * @since 3.0.0
+	 */
+	protected function set_choices() {
+
+		if ( ! is_array( $this->choices ) ) {
+			$this->choices = array();
+		}
+		$this->choices = wp_parse_args(
+			$this->choices, array(
+				'variant' => array(),
+				'fonts'   => array(
+					'standard' => array(),
+					'google'   => array(),
+				),
+			)
+		);
 	}
 }
